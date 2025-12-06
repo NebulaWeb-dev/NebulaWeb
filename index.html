@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NebulaWeb</title>
+    <!-- This index mirrors main.html so GitHub Pages can serve the site from the repo root. -->
+    <!-- If you prefer to keep main.html as the single source, replace this file with a redirect to /main.html -->
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <!-- Inline server-side redirect fallback for GitHub Pages if someone browses the root. -->
+    <!-- For simplicity we include the main page here by server-side include (copied content), so the site works at /index.html -->
+    <script>
+      // If the user explicitly navigated to /main.html, keep them there; otherwise load main.html content in-place.
+      // We'll replace the body with the fetched main.html to avoid duplicating markup maintenance.
+      (function(){
+        const prefersDirect = window.location.pathname.endsWith('/main.html') || window.location.pathname === '/main.html';
+        if (!prefersDirect) {
+          fetch('main.html')
+            .then(resp => {
+              if (!resp.ok) throw new Error('main.html not found');
+              return resp.text();
+            })
+            .then(html => {
+              document.open();
+              document.write(html);
+              document.close();
+            })
+            .catch(() => {
+              // fallback: simple link to main.html
+              document.body.innerHTML = '<p>Open the <a href="main.html">site</a>.</p>';
+            });
+        }
+      })();
+    </script>
+  </body>
+</html>
